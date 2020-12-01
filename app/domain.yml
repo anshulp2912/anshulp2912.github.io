@@ -29,7 +29,6 @@ entities:
 slots:
   name:
     type: text
-    influence_conversation: true
 responses:
   utter_greet:
   - text: Greetings 🤝! May I know who am I talking to?
