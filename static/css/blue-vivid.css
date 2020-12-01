@@ -1,0 +1,51 @@
+.launcher {
+    background-color: #0f609b !important;
+    box-shadow: 0 2px 7px 1px #003e6b;
+}
+
+.imgProfile {
+    /* Uncomment if you have a launcher icon that needs a white background */
+    /* background: white; */
+}
+
+.chat_header {
+	background: #003e6b;
+}
+
+.chat_header_title {
+	color: white;
+}
+
+.chats {
+    background-color: #fff;
+}
+
+.botMsg {
+	background: #003e6b;
+	color: white;
+	box-shadow: 2px 3px 9px 0px #9a82847a;
+}
+
+.userMsg {
+	background: #fff;
+	color: black;
+	box-shadow: 0px 2px 5px 0px #9a828454;
+}
+
+.keypad {
+	background: #f4f7f9;
+}
+
+#sendButton {
+	color: #d8d5d2
+}
+
+.botTyping {
+	background: #003e6b;
+	color: white;
+	box-shadow: 2px 3px 9px 0px #9a82847a;
+}
+
+.botTyping>div {
+	background-color: #fff;
+}

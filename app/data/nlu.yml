@@ -1,0 +1,239 @@
+version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - just going to say hi
+    - heya
+    - hello hi
+    - howdy
+    - hi there
+    - greetings
+    - long time no see
+    - hello again
+    - I greet you
+- intent: introduction
+  examples: |
+    - I am [arjun](name)
+    - [poojan](name)
+    - [kathan](name)
+    - You can call me [prayag](name)
+    - my name is [keyur](name)
+    - I am [poojan](name)
+    - I go by [rushi](name)
+    - [Utsav](name)
+    - You can call me [david](name)
+    - It is [Tom](name)
+    - [John Cena](name)
+    - [Varun Shah](name)
+    - It is [Darshan Patel](name)
+    - I am [Anuj Shah](name)
+    - My name is [Megh](name)
+    - My name is [Harshil Adalja](name)
+    - [Jon](name)
+    - [Anshul Patel](name)
+    - [katie](name)
+    - [Nemo](name)
+    - [Karl](name)
+    - My name is [harry potter](name).
+    - my name is [foram](name)
+    - My name is [Parth](name)
+    - You can call me [Ravi gupta](name)
+    - You can call me [sundar pichai](name)
+    - You can call me [Rahul](name)
+    - I go by [Tejas Bagrecha](name)
+    - I go by [mahashri](name)
+    - I go by [Aatman Patel](name)
+    - It is [Amoli](name)
+    - It is [harshit](name)
+    - It is [Kiran Parikh](name)
+    - It is [Dave Smith](name)
+    - It is [vladmir putin](name)
+    - my name is [henil](name)
+    - [henil](name)
+    - [henil shah](name)
+    - [Hirak](name)
+    - It is [Hirak Tanwar](name)
+    - I go by [Goli](name).
+    - You can call me [Gomuk Kohli](name)
+    - [Heena Mankad](name)
+    - I'm [John](name)
+    - [aladdin](name)
+    - my name is [jack](name)
+    - hi i am [xiao ming](name)
+    - call me [alice](name)
+    - i'm [paul](name)
+    - hi i'm [Nick](name)
+    - hello call me [Jia Ling](name)
+    - i am [mary ong](name)
+    - hey call me [Zara](name)
+    - yo i am [renee](name)
+    - i am [wei ling](name)
+    - you can address me as [mr tan](name)
+    - i am [aaron](name)
+    - [carl](name)
+    - i am [paula](name)
+    - [shyann](name)
+    - im [mike](name)
+    - you can call me [rsykoss](name)
+    - im [jie ying](name)
+    - call me [michelle obama](name)
+    - im [elizabeth](name)
+    - I'm [keith](name)
+    - [jay](name)
+    - [chris](name)
+    - [sy](name)
+    - [yy](name)
+    - [jj](name)
+    - [Michael](name)
+    - [liza peet](name)
+    - [dunkel hills](name)
+    - [Clarisa Attwood](name)
+    - [Melanie Bonavita](name)
+    - [Jia Hui](name)
+    - [Zhi Hao](name)
+    - [Yi Ling](name)
+    - [Grazyna Schiel](name)
+    - [Hyacinth](name)
+    - [Alexis](name)
+    - [Gisela](name)
+    - [Zeel](name)
+    - I am [jay](name)
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: projects
+  examples: |
+    - Projects
+    - Show me your projects
+    - What are your academic projects
+    - What projects have you done?
+    - project
+- intent: education
+  examples: |
+    - Education Qualifications
+    - Education
+    - What can you say about your Education?
+    - Let me know of your Education
+    - Let me know of your Educational Qualifications
+- intent: workexperience
+  examples: |
+    - What projects have you worked on as a professional
+    - What have you done in your professional life
+    - What have you done in industry so far
+    - Where have you worked before?
+    - Show me your work experience
+    - Can you tell me about your work experience
+    - experience working
+    - work ex.
+    - work experience
+- intent: skills
+  examples: |
+    - programming languages
+    - which programming language do you know?
+    - show me your skills
+    - which skill set do you acquire?
+    - which skills do you acquire?
+    - skill set
+    - what are your skills?
+    - skills
+- intent: botabilities
+  examples: |
+    - Suggest me what can I learn
+    - What can you show me?
+    - What can you do?
+    - Show me more
+    - What can I learn about Anshul?
+    - What can I know about Anshul?
+    - What can you tell me about Anshul?
+- intent: playback_attack_detection_for_speaker_verification_systems
+  examples: |
+    - Playback Attack Detection for Speaker Verification Systems
+    - Playback Attack Detection
+    - Speaker Verification Systems
+- intent: next_word_prediction
+  examples: |
+    - Next-Word Prediction
+    - Next Word Prediction
+    - Word Prediction
+- intent: named_entity_recognizer_web_application
+  examples: |
+    - Named Entity Recognizer Web Application
+    - Named Entity Recognizer
+    - NER
+- intent: slytherin_game_using_genetic_algorithm
+  examples: |
+    - Slytherin Game using Genetic Algorithm
+    - Slytherin Game
+    - Snakes Game
+- intent: indian_folk_song_classification
+  examples: |
+    - Indian Folk-Song Classification
+    - Folk-Song Classification
+    - Indian Folk
+    - Indian Folk-Song
+- intent: speaker_diarization
+  examples: |
+    - Speaker Diarization
+    - Diarization
+- intent: ambeats_android_music_player_with_recommender_system
+  examples: |
+    - AMBeats - Android Music Player with Recommender System
+    - Android Music Player with Recommender System
+    - AMBeats
+    - Android Music Player
+- intent: about_anshul
+  examples: |
+    - Can you tell me about Anshul?
+    - Who is Anshul?
+    - About Anshul
+- intent: out_of_scope
+  examples: |
+    - I want to order food
+    - What is 2 + 2?
+    - Who's the US President?

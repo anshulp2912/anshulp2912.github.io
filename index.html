@@ -2,6 +2,20 @@
 <html class="no-js" lang="en">
 
 <head>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Odibee+Sans&display=swap" rel="stylesheet"> 
+    <!--Import materialize.css
+    <link rel="stylesheet" type="text/css" href="static/css/materialize.min.css">
+    -->
+    <!--Main css-->
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <!-- Style: Blue-vivid -->
+    <link rel="stylesheet" type="text/css" href="static/css/blue-vivid.css">
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,9 +26,30 @@
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+
+    
 </head>
 
 <body>
+    <!-- SOCKET IO CHATBOT CONNECTION
+    <div id="webchat"/>
+    <script src="https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.min.js"></script>
+
+    // Or you can replace latest with a specific version
+    <script>
+      WebChat.default.init({
+        selector: "#webchat",
+        customData: {"language": "en"}, // arbitrary custom data. Stay minimal as this will be added to the socket
+        socketUrl: "http://localhost:5005",
+        socketPath: "/socket.io/",
+        title: "BOTAnshul",
+        subtitle: "Onwards and Upwards",
+        params: {"storage": "session"}
+      })
+    </script>
+    -->
+
+
     <div id="mobile-menu-open" class="shadow-large">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
@@ -46,6 +81,46 @@
     </header>
     <!-- End header -->
 
+
+<!--    -->
+    <div class="container">
+    <div class="widget">
+
+      <div class="chat_header">
+
+        <!--Add the name of the bot here -->
+<!-- -->
+        <div class="chat_header_title">BOTAnshul</div>
+        <div id="offline_message"></div>
+      </div>
+
+      <!--Chatbot contents goes here -->
+<!-- -->
+      <div class="chats" id="chats">
+        <div class="clearfix"></div>
+
+
+      </div>
+
+      <!--user typing indicator -->
+<!-- -->
+      <div class="keypad">
+
+        <textarea id="user" placeholder="Type a message..." class="usrInput"></textarea>
+
+        <div id="sendButton"><i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+      </div>
+    </div>
+
+    <!--bot widget -->
+<!-- -->
+    <button type="button" class="launcher profile_div" id="profile_div" style="outline: none;">
+        <img class="imgProfile" id='launcher' src="static/img/launcher-icon.png" class="open-launcher" alt="">
+      </button>
+<!-- -->
+
+
+
     <div id="lead">
         <div id="lead-content">
             <h1>Anshul Patel</h1>
@@ -66,7 +141,7 @@
     <!-- End #lead -->
 
     <div id="about">
-        <div class="container">
+        <div class="containerWS">
             <div class="row">
                 <div class="col-md-4">
                     <h2 class="heading">About Me</h2>
@@ -149,7 +224,7 @@
 
     <div id="projects" class="background-alt">
         <h2 class="heading">Projects</h2>
-        <div class="container">
+        <div class="containerWS">
             <div class="row">
                 <div class="project shadow-large">
                     <div class="project-image">
@@ -315,7 +390,7 @@
     <!-- End #contact -->
 
     <footer>
-        <div class="container">
+        <div class="containerWS">
             <div class="row">
                 <div class="col-sm-5 copyright">
                     <p>
@@ -345,8 +420,13 @@
     </footer>
     <!-- End footer -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/scripts.min.js"></script>
+
+    
+    <!--Chatbot Script -->
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/script.js"></script>
 </body>
 
 </html>

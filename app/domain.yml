@@ -1,0 +1,366 @@
+version: "2.0"
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- goodbye
+- affirm
+- deny
+- bot_challenge
+- introduction
+- projects
+- skills
+- about_anshul
+- workexperience
+- education
+- botabilities
+- ambeats_android_music_player_with_recommender_system
+- speaker_diarization
+- indian_folk_song_classification
+- slytherin_game_using_genetic_algorithm
+- named_entity_recognizer_web_application
+- next_word_prediction
+- playback_attack_detection_for_speaker_verification_systems
+- out_of_scope
+
+entities:
+- name
+slots:
+  name:
+    type: text
+    influence_conversation: true
+responses:
+  utter_greet:
+  - text: Greetings 🤝! May I know who am I talking to?
+  - text: Greetings 🤝! Can I get your good name?
+  - text: Greetings 🤝! What name can I refer you with?
+  - text: Greetings 🤝! May I ask you what's your name?
+  - text: Good Day 👋! May I know who am I talking to?
+  - text: Good Day 👋! Can I get your good name?
+  - text: Good Day 👋! What name can I refer you with?
+  - text: Good Day 👋! May I ask you what's your name?
+  - text: Namaste 🙏! May I know who am I talking to?
+  - text: Namaste 🙏! Can I get your good name?
+  - text: Namaste 🙏! What name can I refer you with?
+  - text: Namaste 🙏! May I ask you what's your name?
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am 🤖BOTAnshul, created by 🧙Master Anshul using powers borrowed from Rasa HQ.
+  utter_welcome:
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created to replace Anshul. What
+      would you like to know?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created to replicate Anshul. What
+      would you like to know?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created by Anshul. What would you
+      like to know?
+  - buttons:
+    - payload: Education
+      title: Education🎓
+    - payload: Work Experience
+      title: Work Experience💼
+    - payload: Projects
+      title: Project👨‍💻
+    - payload: Skills
+      title: Skills🤹
+    text: Good to have you here, {name}. I am BOTAnshul, a chatbot created to replace
+      Anshul. What would you like to know?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Good to have you here, {name}. I am BOTAnshul, a chatbot created to replicate
+      Anshul. What would you like to know?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Good to have you here, {name}. I am BOTAnshul, a chatbot created by Anshul.
+      What would you like to know?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created to replace Anshul. How may
+      I help you?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Good to have you here, {name}. I am BOTAnshul, a chatbot created by Anshul.
+      How may I help you?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created to replicate Anshul. How
+      may I help you?
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Hello {name}! I am BOTAnshul, a chatbot created by Anshul. How may I help
+      you?
+  utter_education:
+  - custom:
+      data:
+      - description: B.Tech in Information Technology
+        title: Nirma University [2016-2020]
+      payload: collapsible
+  utter_skills:
+  - custom:
+      data:
+      - description: Python, C++, C, Android, SQL
+        title: Programming Languages
+      - description: Natural Language Processing, Computer Vision, Audio Analysis,
+          Deep Learning, Data Visualization, Statistical Modelling, Predictive Analysis,
+          Keras, Exploratory Data Analysis, Numpy, Pandas
+        title: Machine Learning and Data Science
+      - description: Android Studio, Tableau, Google Colaboratory
+        title: Softwares and Tools
+      - description: Firebase, AWS SQS and S3 Buckets, SQLLite, MySQL
+        title: Database
+      payload: collapsible
+  utter_workexperience:
+  - custom:
+      data:
+      - description: This is a continuation of the work done as Machine Learning Internship
+          at Knowarth Technologies. Working on improving the classification pipeline
+          using a feedback loop using Active Learning concepts. Building a Product
+          guide for the released features to ease of use using Wordpress.
+        title: Cloudoffis - Associate Engineer [May 2020 - Present]
+      - description: Joined the python team to bring the POI done in earlier internship
+          to real-life product. Product aimed at automating the SMSF process for Australian
+          accountants. Roles involved building Machine Learning models for Document
+          Classification(Stacking Models) and setup project architecture. Achieved
+          ~99.99% accuracy on Classification task for 10 document wraps and building
+          an AWS SQS based distributed system.
+        title: Knowarth Technologies - Machine Learning Intern [Jan 2020 - May 2020]
+      - description: Project involved developing an API with Flask-Restplus as a Proof
+          of Idea. It firstly recognizes the document type using keyword matching
+          and machine learning algorithm. It then extracts the critical information,
+          finally delivering it to the user in a summarized manner within either a
+          JSON or an Excel file format.
+        title: Knowarth Technologies - Project Intern [Jan 2020 - May 2020]
+      payload: collapsible
+  utter_projects_detail:
+  - custom:
+      data:
+      - description: The project involves creating a system modeled for audio sample
+          mainly conversations. The system has to identify various characteristics/features
+          such as the number of speakers, who spoke which statement, who spoke at
+          what time and the distance of speaker from the recording device.
+        title: Speaker Diarization
+      - description: In this project, we introduced a new dataset of 307 folk songs
+          from five different states of India. From these audio files, we extracted
+          different features and tried to classify these songs into their original
+          labels. Mel- Spectrograms, when given to a pre-trained ResNet-50 Model,
+          produced better results than other features used in our experiment. Finally,
+          the paper was accepted to FRMS'20 Conference.
+        title: Indian Folk-Song Classification
+      - description: The project aimed at developing the old arcade Snake Game using
+          the Genetic Algorithm that allows the computer to make moves for the snake
+          which were learnt over the generations by running the algorithm several
+          times. Results show that computer scored a lot more points than an average
+          human being.
+        title: Slytherin Game using Genetic Algorithm
+      - description: The project involves developing an android app that displays
+          all the songs stored in the local storage that can be played using a minimalistic
+          user interface. The interface allows users to like the songs they hear and
+          those songs are then saved onto an online database. These liked songs were
+          then compared with other users who liked similar songs to provide new recommendations
+          using Machine Learning algorithm.
+        title: AMBeats - Android Music Player with Recommender System
+      payload: collapsible
+    text: Type the name of project to check it out!⌨️
+    buttons:
+    - title: "Check out more project"
+      payload: "Yes"
+    - title: "What more can you do?"
+      payload: "What more can you do?"
+  utter_more_projects:
+  - text: Would you like to check more projects?
+    buttons:
+    - title: "Yes"
+      payload: "Yes"
+    - title: "No"
+      payload: "No"
+  - text: Wanna check some more projects done by Anshul?
+    buttons:
+    - title: "Yes"
+      payload: "Yes"
+    - title: "No"
+      payload: "No"
+  utter_more_projects_detail:
+  - custom:
+      data:
+      - description: The project was a research-oriented work that involved extracting
+          cepstral features from audio obtained from the ASVSpoof 2017 benchmark dataset,
+          which were then analyzed to find out which features better affect the decision
+          of whether the spoken speech is genuine or spoof.
+        title: Playback Attack Detection for Speaker Verification Systems
+      - description: The project involves developing a N-gram probabilistic model
+          that predicts the next possible words based on the entered word or a sentence
+          by the user. The prediction made by a pre-trained model trained on the text
+          of multiple storybooks.
+        title: Next-Word Prediction
+      - description: The project utilizes a combination of python and natural language
+          processing to create a custom model that helps machine classify text based
+          on person, location, money, time, date and much more. We show the use of
+          Bidirectional LSTM and BERT Models to overcome the problem. The project
+          can be launched as demo version using Gradio.
+        title: Named Entity Recognizer Web Application
+      payload: collapsible
+    text: Type the name of project to check it out!⌨️
+  utter_botabilities:
+  - custom:
+      data:
+      - payload: Education
+        title: Education🎓
+      - payload: Work Experience
+        title: Work Experience💼
+      - payload: Projects
+        title: Project👨‍💻
+      - payload: Skills
+        title: Skills🤹
+      payload: quickReplies
+    text: Choose an option
+  utter_ambeats_android_music_player_with_recommender_system:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anshulp2912/AMBeats"
+  utter_speaker_diarization:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anuj200199/Spectogram"
+  utter_indian_folk_song_classification:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anshulp2912/A-dataset-of-Indian-Folk-Songs"
+  utter_slytherin_game_using_genetic_algorithm:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anshulp2912/Slytherin-Game-using-Genetic-Algorithm"
+  utter_named_entity_recognizer_web_application:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anshulp2912/Named-Entity-Recognition-Guide"
+  utter_next_word_prediction:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anuj200199/Text-Prediction"
+  utter_playback_attack_detection_for_speaker_verification_systems:
+    - text: Click on button to check out the project 👇
+      buttons:
+      - title: "Link"
+        payload: "https://github.com/anshulp2912/ASVspoof-audio-prediction-"
+  utter_about_anshul:
+    - text: 🧙Master Anshul is an aspiring Machine Learning Engineer who enjoys connecting the dots; be it ideas from different disciplines, people from different teams, or applications from different industries. 🧙Master have strong technical skills and an academic background in engineering, statistics, and machine learning. His passion lies in solving business problems with tailored data and algorithms and communicating complex ideas to non-technical stakeholders. He is able to jump across verticals to deliver high-performing AI solutions.
+  utter_out_of_scope:
+    - text: Sorry, I can't handle that request.
+  utter_please_rephrase:
+    - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+actions:
+- utter_greet
+- utter_goodbye
+- utter_iamabot
+- utter_welcome
+- utter_projects_detail
+- utter_more_projects_detail
+- utter_workexperience
+- utter_skills
+- utter_education
+- utter_more_projects
+- utter_botabilities
+- utter_ambeats_android_music_player_with_recommender_system
+- utter_speaker_diarization
+- utter_indian_folk_song_classification
+- utter_slytherin_game_using_genetic_algorithm
+- utter_named_entity_recognizer_web_application
+- utter_next_word_prediction
+- utter_playback_attack_detection_for_speaker_verification_systems
+- utter_about_anshul
+- utter_out_of_scope
+- utter_please_rephrase
