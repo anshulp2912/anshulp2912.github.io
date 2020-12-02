@@ -109,7 +109,7 @@ function scrollToBottomOfResults() {
 //============== send user message to rasa server =============================================
 function send(message) {
     $.ajax({
-        url: "http://localhost:5005/webhooks/rest/webhook",
+        url: "https://anshul-botanshul-website.herokuapp.com/webhooks/rest/webhook",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ message: message, sender: user_id }),
