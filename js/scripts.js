@@ -228,7 +228,21 @@
             scrollTrigger: {
                 trigger: '#skills',
                 start: 'top 80%',
-                toggleActions: 'play none none reverse'
+                toggleActions: 'play none none none'
+            },
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.4,
+            stagger: 0.03,
+            ease: 'back.out(1.7)'
+        });
+
+        // Animate hobby tags
+        gsap.from('#hobbies li', {
+            scrollTrigger: {
+                trigger: '#hobbies',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
             },
             scale: 0.8,
             opacity: 0,
