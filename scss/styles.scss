@@ -767,7 +767,8 @@ header {
 }
 
 .project {
-    position: relative;
+    display: flex;
+    align-items: stretch;
     max-width: 900px;
     margin: 0 auto var(--spacing-xl) auto;
     overflow: hidden;
@@ -782,21 +783,25 @@ header {
 }
 
 .project-image {
-    float: left;
+    flex-shrink: 0;
+    width: 300px;
     border-radius: var(--radius) 0 0 var(--radius);
     overflow: hidden;
 
     img {
         @include transition();
         display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 }
 
 .project-info {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-left: 300px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: var(--spacing-lg);
 
     h3 {
@@ -845,10 +850,7 @@ header {
 
 .no-image {
     .project-info {
-        position: relative;
-        margin: 0;
         padding: var(--spacing-xl) var(--spacing-lg);
-        transform: none;
     }
 }
 
@@ -1434,11 +1436,7 @@ footer {
     }
 
     .project-info {
-        position: relative;
-        margin: 0;
         padding: var(--spacing-lg) var(--spacing-md);
-        top: auto;
-        transform: none;
     }
 
     footer {
