@@ -161,7 +161,7 @@
         gsap.registerPlugin(ScrollTrigger);
 
         // Animate sections on scroll
-        gsap.utils.toArray('section, #about, #experience, #education, #projects, #skills, #contact').forEach(section => {
+        gsap.utils.toArray('section, #about, #experience, #education, #publication, #projects, #skills, #hobbies, #contact').forEach(section => {
             gsap.from(section.querySelectorAll('.heading, h2'), {
                 scrollTrigger: {
                     trigger: section,
@@ -228,7 +228,21 @@
             scrollTrigger: {
                 trigger: '#skills',
                 start: 'top 80%',
-                toggleActions: 'play none none reverse'
+                toggleActions: 'play none play reverse'
+            },
+            scale: 0.8,
+            opacity: 0,
+            duration: 0.4,
+            stagger: 0.03,
+            ease: 'back.out(1.7)'
+        });
+
+        // Animate hobby tags
+        gsap.from('#hobbies li', {
+            scrollTrigger: {
+                trigger: '#hobbies',
+                start: 'top 80%',
+                toggleActions: 'play none play reverse'
             },
             scale: 0.8,
             opacity: 0,
