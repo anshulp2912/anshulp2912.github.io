@@ -228,7 +228,7 @@
             scrollTrigger: {
                 trigger: '#skills',
                 start: 'top 80%',
-                toggleActions: 'play none play reverse'
+                toggleActions: 'play none none none'
             },
             scale: 0.8,
             opacity: 0,
@@ -242,7 +242,7 @@
             scrollTrigger: {
                 trigger: '#hobbies',
                 start: 'top 80%',
-                toggleActions: 'play none play reverse'
+                toggleActions: 'play none none none'
             },
             scale: 0.8,
             opacity: 0,
