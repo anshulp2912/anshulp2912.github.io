@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 const NAV_ITEMS = [
-  { label: 'Hero', id: 'hero' },
   { label: 'About', id: 'about' },
   { label: 'Experience', id: 'experience' },
   { label: 'Projects', id: 'projects' },
@@ -17,99 +16,141 @@ const NAV_ITEMS = [
 export function Navigation() {
   const [activeId, setActiveId] = useState<string>('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const prefersReduced = useReducedMotion()
   const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
-    const handleIntersect: IntersectionObserverCallback = (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          setActiveId(entry.target.id)
-        }
-      }
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-    observerRef.current = new IntersectionObserver(handleIntersect, {
-      threshold: 0.5,
-    })
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveId(entry.target.id)
+        }
+      },
+      // rootMargin creates a horizontal band at the center of the viewport.
+      // threshold: 0 fires as soon as any part of the section enters that band.
+      // This handles very tall sections (e.g. Experience at 500vh) correctly.
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    )
 
     NAV_ITEMS.forEach(({ id }) => {
       const el = document.getElementById(id)
       if (el) observerRef.current!.observe(el)
     })
 
-    return () => {
-      observerRef.current?.disconnect()
-    }
+    return () => observerRef.current?.disconnect()
   }, [])
 
   const handleLinkClick = (id: string) => {
-    const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     setMenuOpen(false)
   }
 
   return (
     <>
+      {/* Desktop top bar */}
       <nav
-        className="fixed left-6 top-0 bottom-0 z-50 hidden lg:flex flex-col justify-center gap-6 pointer-events-auto"
         aria-label="Primary navigation"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 50,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 2.5rem',
+          height: '56px',
+          backgroundColor: scrolled ? 'rgba(8,8,8,0.85)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(16px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
+          transition: 'background-color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease',
+        }}
+        className="hidden lg:flex"
       >
-        {NAV_ITEMS.map(({ label, id }) => {
-          const isActive = activeId === id
-          return (
-            <button
-              key={id}
-              onClick={() => handleLinkClick(id)}
-              className="flex items-center gap-2 group bg-transparent border-none cursor-pointer p-0"
-              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-              aria-label={`Navigate to ${label}`}
-            >
-              <span
+        {/* Wordmark */}
+        <button
+          onClick={() => handleLinkClick('hero')}
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: '1rem',
+            color: 'var(--color-white)',
+            letterSpacing: '0.04em',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+          }}
+        >
+          AP
+          <span style={{ color: 'var(--color-neon)', marginLeft: '2px' }}>.</span>
+        </button>
+
+        {/* Links */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          {NAV_ITEMS.map(({ label, id }) => {
+            const isActive = activeId === id
+            return (
+              <button
+                key={id}
+                onClick={() => handleLinkClick(id)}
                 style={{
                   fontFamily: 'var(--font-mono)',
-                  fontSize: '0.68rem',
-                  letterSpacing: '0.12em',
+                  fontSize: '0.7rem',
+                  letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: isActive ? 'var(--color-neon)' : 'var(--color-slate)',
-                  transition: 'color 0.25s ease',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '0.25rem 0',
+                  position: 'relative',
+                  transition: 'color 0.2s ease',
                 }}
               >
                 {label}
-              </span>
-              <span
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  flexShrink: 0,
-                  backgroundColor: isActive ? 'var(--color-neon)' : 'var(--color-slate)',
-                  transition: 'background-color 0.25s ease',
-                }}
-              />
-            </button>
-          )
-        })}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-indicator"
+                    style={{
+                      position: 'absolute',
+                      bottom: '-2px',
+                      left: 0,
+                      right: 0,
+                      height: '1px',
+                      backgroundColor: 'var(--color-neon)',
+                    }}
+                  />
+                )}
+              </button>
+            )
+          })}
+        </div>
       </nav>
 
+      {/* Mobile hamburger */}
       <button
         onClick={() => setMenuOpen(true)}
-        className="fixed top-5 right-5 z-50 lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 bg-transparent border-none cursor-pointer p-0"
+        className="fixed top-4 right-5 z-50 lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 bg-transparent border-none cursor-pointer p-0"
         aria-label="Open navigation menu"
       >
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            style={{
-              display: 'block',
-              width: '24px',
-              height: '2px',
-              backgroundColor: 'var(--color-neon)',
-            }}
+            style={{ display: 'block', width: '24px', height: '2px', backgroundColor: 'var(--color-neon)' }}
           />
         ))}
       </button>
 
+      {/* Mobile full-screen overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -141,21 +182,21 @@ export function Navigation() {
                   transition={
                     prefersReduced
                       ? { duration: 0 }
-                      : { duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }
+                      : { duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }
                   }
                 >
                   <button
                     onClick={() => handleLinkClick(id)}
                     style={{
                       fontFamily: 'var(--font-display)',
-                      fontWeight: 900,
-                      fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+                      fontWeight: 700,
+                      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
                       lineHeight: 1,
                       color: activeId === id ? 'var(--color-neon)' : 'var(--color-white)',
                       background: 'none',
                       border: 'none',
                       cursor: 'pointer',
-                      padding: '0.15em 0',
+                      padding: '0.1em 0',
                       transition: 'color 0.2s ease',
                     }}
                   >
