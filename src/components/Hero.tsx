@@ -1,165 +1,252 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useMotionValueEvent,
+} from 'framer-motion'
 
-const name = 'Anshul Patel'
-const subtitle = 'Software Development Engineer · Cloud Infrastructure · Full-Stack'
-
-const container = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.045, delayChildren: 0.4 },
-  },
-}
-
-const charVariant = {
-  hidden: { opacity: 0, y: 60 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', damping: 11, stiffness: 120 },
-  },
-}
+const STATS = [
+  { prefix: '> ', text: 'SDE II @ AWS' },
+  { prefix: '> ', text: '3 yrs cloud infra' },
+  { prefix: '> ', text: '20K+ devs at launch' },
+  { prefix: '> ', text: '40% perf improvement' },
+]
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [0, 180])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const prefersReduced = useReducedMotion()
+  const [scrolledPast, setScrolledPast] = useState(false)
+  const [visibleStats, setVisibleStats] = useState<number[]>(
+    prefersReduced ? STATS.map((_, i) => i) : []
+  )
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    setScrolledPast(latest > 100)
+  })
+
+  useEffect(() => {
+    if (prefersReduced) {
+      setVisibleStats(STATS.map((_, i) => i))
+      return
+    }
+    const timers = STATS.map((_, i) =>
+      setTimeout(
+        () => setVisibleStats((prev) => [...prev, i]),
+        800 + i * 500
+      )
+    )
+    return () => timers.forEach(clearTimeout)
+  }, [prefersReduced])
+
+  const panelAnim = prefersReduced
+    ? {}
+    : {
+        initial: { clipPath: 'inset(0% 100% 0% 0%)' },
+        animate: { clipPath: 'inset(0% 0% 0% 0%)' },
+        transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
+      }
+
+  const wordAnim = (delay: number) =>
+    prefersReduced
+      ? {}
+      : {
+          initial: { clipPath: 'inset(100% 0% 0% 0%)' },
+          animate: { clipPath: 'inset(0% 0% 0% 0%)' },
+          transition: { duration: 0.65, ease: [0.76, 0, 0.24, 1], delay },
+        }
 
   return (
     <section
       id="hero"
-      ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0f]"
+      ref={sectionRef}
+      className="relative w-full flex flex-col lg:flex-row"
+      style={{ minHeight: '100vh' }}
     >
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            width: 600,
-            height: 600,
-            top: '10%',
-            left: '5%',
-            background: 'radial-gradient(circle, rgba(16,185,129,0.14) 0%, transparent 70%)',
-            filter: 'blur(40px)',
-          }}
-          animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-          transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            width: 450,
-            height: 450,
-            bottom: '10%',
-            right: '5%',
-            background: 'radial-gradient(circle, rgba(20,184,166,0.12) 0%, transparent 70%)',
-            filter: 'blur(40px)',
-          }}
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.4, 0.8, 0.4] }}
-          transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-        />
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            width: 300,
-            height: 300,
-            top: '60%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(16,185,129,0.07) 0%, transparent 70%)',
-            filter: 'blur(60px)',
-          }}
-          animate={{ scale: [1, 1.6, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-        />
-      </div>
-
-      {/* Dot grid overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none" />
-
+      {/* ── Left panel: cream ─────────────────────────────────────── */}
       <motion.div
-        className="relative z-10 text-center px-6 max-w-4xl mx-auto"
-        style={{ y, opacity }}
+        className="noise-overlay flex-none lg:w-[45%] w-full flex flex-col justify-center px-10 py-16 lg:py-0 lg:min-h-screen"
+        style={{ backgroundColor: '#f0ece3' }}
+        {...panelAnim}
       >
-        {/* Animated name */}
-        <motion.h1
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="text-5xl sm:text-7xl font-bold tracking-tight mb-6"
-          aria-label={name}
-        >
-          {name.split('').map((char, i) =>
-            char === ' ' ? (
-              <span key={i} className="inline-block w-[0.25em]" />
-            ) : (
-              <motion.span
-                key={i}
-                variants={charVariant}
-                className="inline-block gradient-text"
-              >
-                {char}
-              </motion.span>
-            )
-          )}
-        </motion.h1>
+        <div className="flex flex-col gap-2">
+          {/* Name: ANSHUL */}
+          <div style={{ overflow: 'hidden' }}>
+            <motion.h1
+              {...wordAnim(0.3)}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 900,
+                fontSize: 'clamp(3.5rem, 10vw, 8rem)',
+                lineHeight: 1,
+                color: '#080808',
+                margin: 0,
+              }}
+            >
+              ANSHUL
+            </motion.h1>
+          </div>
 
-        {/* Subtitle */}
-        <motion.p
-          className="text-slate-400 text-lg sm:text-xl mb-10 max-w-2xl mx-auto leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.7, ease: 'easeOut' }}
-        >
-          {subtitle}
-        </motion.p>
+          {/* Name: PATEL */}
+          <div style={{ overflow: 'hidden' }}>
+            <motion.h1
+              {...wordAnim(0.4)}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 900,
+                fontSize: 'clamp(3.5rem, 10vw, 8rem)',
+                lineHeight: 1,
+                color: '#080808',
+                margin: 0,
+              }}
+            >
+              PATEL
+            </motion.h1>
+          </div>
 
-        {/* CTA */}
-        <motion.a
-          href="/images/resume.pdf"
-          download="Anshul_resume.pdf"
-          className="inline-block relative overflow-hidden px-8 py-4 rounded-full border-2 border-emerald-500 text-emerald-400 font-semibold text-sm tracking-wide group"
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.5, type: 'spring', stiffness: 300, damping: 22 }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.96 }}
-        >
-          <span className="relative z-10 group-hover:text-[#0a0a0f] transition-colors duration-300">
-            Download Resume
-          </span>
-          <motion.div
-            className="absolute inset-0 bg-emerald-500"
-            initial={{ x: '-101%' }}
-            whileHover={{ x: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-          />
-        </motion.a>
+          {/* Role subtitle */}
+          <motion.p
+            initial={prefersReduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={prefersReduced ? { duration: 0 } : { delay: 0.65, duration: 0.5 }}
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '1rem',
+              color: '#8892a4',
+              marginTop: '0.75rem',
+            }}
+          >
+            Software Development Engineer
+          </motion.p>
+
+          {/* Resume button */}
+          <motion.a
+            href="/Anshul_Patel_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={prefersReduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={prefersReduced ? { duration: 0 } : { delay: 0.75, duration: 0.45 }}
+            whileHover={prefersReduced ? {} : { backgroundColor: '#f0ece3', color: '#080808' }}
+            style={{
+              display: 'inline-block',
+              marginTop: '2rem',
+              alignSelf: 'flex-start',
+              padding: '0.65rem 1.5rem',
+              backgroundColor: '#080808',
+              color: '#f0ece3',
+              border: '1px solid #080808',
+              fontFamily: 'var(--font-body)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'background-color 200ms ease, color 200ms ease',
+            }}
+          >
+            Download Resume ↗
+          </motion.a>
+        </div>
       </motion.div>
 
-      {/* Scroll cue */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.2, duration: 0.6 }}
+      {/* ── Right panel: ink ──────────────────────────────────────── */}
+      <div
+        className="flex-1 w-full flex items-center justify-center px-8 py-16 lg:py-0 lg:min-h-screen relative overflow-hidden"
+        style={{ backgroundColor: '#080808' }}
       >
-        <motion.button
-          onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          className="w-11 h-11 rounded-full border-2 border-emerald-500/40 flex items-center justify-center text-emerald-400 hover:border-emerald-500 hover:bg-emerald-500/10 transition-colors"
-          animate={{ y: [0, 7, 0] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-          aria-label="Scroll down"
+        {/* Neon glow orb */}
+        <motion.div
+          aria-hidden="true"
+          animate={prefersReduced ? {} : { scale: [1, 1.15, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            position: 'absolute',
+            width: 400,
+            height: 400,
+            borderRadius: '50%',
+            background:
+              'radial-gradient(circle, rgba(0,232,122,0.15) 0%, transparent 70%)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+
+        {/* Terminal card */}
+        <div
+          className="relative z-10 w-full max-w-md rounded-lg overflow-hidden"
+          style={{
+            border: '1px solid rgba(255,255,255,0.1)',
+            backgroundColor: '#080808',
+          }}
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </motion.button>
+          {/* Emerald top bar */}
+          <div
+            style={{
+              height: 4,
+              backgroundColor: '#00e87a',
+              borderRadius: '8px 8px 0 0',
+            }}
+          />
+
+          {/* Terminal content */}
+          <div className="p-6 flex flex-col gap-3">
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={prefersReduced ? false : { opacity: 0 }}
+                animate={{ opacity: visibleStats.includes(i) ? 1 : 0 }}
+                transition={prefersReduced ? { duration: 0 } : { duration: 0.3 }}
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '1rem',
+                  lineHeight: 1.6,
+                }}
+              >
+                <span style={{ color: '#00e87a' }}>{stat.prefix}</span>
+                <span style={{ color: '#fafafa' }}>{stat.text}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Scroll indicator ──────────────────────────────────────── */}
+      <motion.div
+        aria-hidden="true"
+        animate={
+          prefersReduced
+            ? {}
+            : {
+                opacity: scrolledPast ? 0 : 1,
+                y: scrolledPast ? 8 : [0, 10, 0],
+              }
+        }
+        transition={
+          prefersReduced
+            ? { duration: 0 }
+            : scrolledPast
+            ? { duration: 0.3 }
+            : { duration: 1.5, repeat: Infinity, ease: 'easeInOut' }
+        }
+        initial={prefersReduced ? false : { opacity: 0 }}
+        style={{
+          position: 'absolute',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '1.25rem',
+          color: '#8892a4',
+          pointerEvents: 'none',
+          zIndex: 20,
+          opacity: prefersReduced ? 1 : undefined,
+        }}
+      >
+        ↓
       </motion.div>
     </section>
   )

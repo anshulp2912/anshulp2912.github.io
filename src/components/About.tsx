@@ -1,49 +1,103 @@
 'use client'
 
-import { motion, useInView } from 'framer-motion'
+import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useRef } from 'react'
 
+const pullQuote = '"I build the infra no one sees, for the products everyone uses."'
+
 const paragraphs = [
-  "I'm a Software Development Engineer with experience building scalable cloud infrastructure and full-stack applications. Most recently at Amazon Web Services in New York, I led core product infrastructure for Kiro — AWS's autonomous AI development agent — enjoying the challenge of bridging cutting-edge AI with practical developer tools.",
-  "My expertise spans full-stack development with TypeScript, Python, and Java, along with deep experience in AWS cloud infrastructure including CDK, Lambda, DynamoDB, and distributed systems. I've architected solutions that improved performance by 40% and scaled platforms to support 20,000+ users at launch.",
-  "I'm passionate about Machine Learning, NLP, and building side projects that solve real problems. I hold a Master's in Computer Science from NC State University (4.0 GPA) and love mentoring engineers and driving operational excellence initiatives.",
+  "I'm an SDE II at Amazon Web Services, where I architect cloud infrastructure that powers developer tools used by tens of thousands of engineers. My work lives at the intersection of distributed systems, performance engineering, and product thinking.",
+  "Before that, I built materialized view systems, business metrics pipelines, and led operational excellence initiatives at AWS CodeCatalyst. I hold an M.S. in Computer Science from NC State (4.0 GPA) and love working on problems that require both deep systems knowledge and thoughtful product design.",
+  "Outside of work, I explore algorithmic trading, contribute to open-source ML tools, and build community products like Lekha — a portfolio tracker for the Indian investing community.",
 ]
 
 export function About() {
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const prefersReducedMotion = useReducedMotion()
+
+  const clipPathInitial = prefersReducedMotion ? 'inset(0% 0% 0% 0%)' : 'inset(0% 100% 0% 0%)'
+  const clipPathFinal = 'inset(0% 0% 0% 0%)'
 
   return (
     <section
       id="about"
-      ref={ref}
-      className="relative py-28 px-6 bg-[#12121a] dot-grid"
+      className="relative py-28 px-6 overflow-hidden"
+      style={{ backgroundColor: '#080808' }}
     >
-      <div className="max-w-5xl mx-auto">
-        <div className="grid md:grid-cols-[200px_1fr] gap-12 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
-            <h2 className="section-heading text-left">About Me</h2>
-          </motion.div>
+      {/* Giant section counter — desktop only */}
+      <div
+        className="hidden lg:block absolute left-0 top-1/2 pointer-events-none select-none"
+        style={{
+          transform: 'translateY(-50%) rotate(-90deg)',
+          transformOrigin: 'center center',
+        }}
+        aria-hidden="true"
+      >
+        <span
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 900,
+            fontSize: '12rem',
+            lineHeight: 1,
+            color: '#00e87a',
+            opacity: 0.15,
+            display: 'block',
+          }}
+        >
+          01
+        </span>
+      </div>
 
-          <div className="space-y-5">
+      {/* Animated two-column content block */}
+      <motion.div
+        ref={ref}
+        initial={{ clipPath: clipPathInitial }}
+        animate={isInView ? { clipPath: clipPathFinal } : { clipPath: clipPathInitial }}
+        transition={{
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1],
+        }}
+        className="relative max-w-6xl mx-auto"
+      >
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 lg:items-start">
+          {/* Left column: pull quote (~40%) */}
+          <div className="lg:w-[40%] flex-shrink-0">
+            <blockquote>
+              <p
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                  lineHeight: 1.3,
+                  color: '#f0ece3',
+                  margin: 0,
+                }}
+              >
+                {pullQuote}
+              </p>
+            </blockquote>
+          </div>
+
+          {/* Right column: body paragraphs (~60%) */}
+          <div className="lg:w-[60%] flex flex-col gap-6">
             {paragraphs.map((p, i) => (
-              <motion.p
+              <p
                 key={i}
-                className="text-slate-300 leading-8 text-[1.05rem]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + i * 0.12, ease: 'easeOut' }}
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  color: '#8892a4',
+                  lineHeight: 1.75,
+                  margin: 0,
+                  fontSize: '1rem',
+                }}
               >
                 {p}
-              </motion.p>
+              </p>
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

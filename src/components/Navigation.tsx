@@ -1,119 +1,169 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
-const links = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#education', label: 'Education' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#contact', label: 'Contact' },
+const NAV_ITEMS = [
+  { label: 'Hero', id: 'hero' },
+  { label: 'About', id: 'about' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Education', id: 'education' },
+  { label: 'More', id: 'more' },
+  { label: 'Contact', id: 'contact' },
 ]
 
 export function Navigation() {
-  const [active, setActive] = useState('')
+  const [activeId, setActiveId] = useState<string>('')
   const [menuOpen, setMenuOpen] = useState(false)
+  const prefersReduced = useReducedMotion()
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
-    const onScroll = () => {
-      const offset = window.scrollY + 120
-      for (const { href } of links) {
-        const id = href.slice(1)
-        const el = document.getElementById(id)
-        if (el && offset >= el.offsetTop && offset < el.offsetTop + el.offsetHeight) {
-          setActive(id)
+    const handleIntersect: IntersectionObserverCallback = (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          setActiveId(entry.target.id)
         }
       }
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+
+    observerRef.current = new IntersectionObserver(handleIntersect, {
+      threshold: 0.5,
+    })
+
+    NAV_ITEMS.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (el) observerRef.current!.observe(el)
+    })
+
+    return () => {
+      observerRef.current?.disconnect()
+    }
   }, [])
+
+  const handleLinkClick = (id: string) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
+  }
 
   return (
     <>
-      <motion.header
-        className="fixed top-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none"
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+      <nav
+        className="fixed left-6 top-0 bottom-0 z-50 hidden lg:flex flex-col justify-center gap-6 pointer-events-auto"
+        aria-label="Primary navigation"
       >
-        <nav className="glass rounded-2xl px-2 py-2 hidden md:flex gap-1 pointer-events-auto">
-          {links.map(({ href, label }) => {
-            const id = href.slice(1)
-            const isActive = active === id
-            return (
-              <a
-                key={href}
-                href={href}
-                className={`relative px-5 py-2.5 text-sm font-medium rounded-xl transition-colors duration-200 ${
-                  isActive ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-100'
-                }`}
+        {NAV_ITEMS.map(({ label, id }) => {
+          const isActive = activeId === id
+          return (
+            <button
+              key={id}
+              onClick={() => handleLinkClick(id)}
+              className="flex items-center gap-2 group bg-transparent border-none cursor-pointer p-0"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+              aria-label={`Navigate to ${label}`}
+            >
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.68rem',
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  color: isActive ? 'var(--color-neon)' : 'var(--color-slate)',
+                  transition: 'color 0.25s ease',
+                }}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 bg-emerald-500/10 rounded-xl"
-                    transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-                  />
-                )}
-                <span className="relative z-10">{label}</span>
-              </a>
-            )
-          })}
-        </nav>
+                {label}
+              </span>
+              <span
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                  backgroundColor: isActive ? 'var(--color-neon)' : 'var(--color-slate)',
+                  transition: 'background-color 0.25s ease',
+                }}
+              />
+            </button>
+          )
+        })}
+      </nav>
 
-        <button
-          onClick={() => setMenuOpen(true)}
-          className="md:hidden fixed right-4 top-4 glass rounded-xl p-3 text-emerald-400 pointer-events-auto"
-          aria-label="Open menu"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </motion.header>
+      <button
+        onClick={() => setMenuOpen(true)}
+        className="fixed top-5 right-5 z-50 lg:hidden flex flex-col justify-center items-center gap-[5px] w-10 h-10 bg-transparent border-none cursor-pointer p-0"
+        aria-label="Open navigation menu"
+      >
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            style={{
+              display: 'block',
+              width: '24px',
+              height: '2px',
+              backgroundColor: 'var(--color-neon)',
+            }}
+          />
+        ))}
+      </button>
 
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 md:hidden"
+            key="mobile-nav"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 lg:hidden flex flex-col items-center justify-center"
+            style={{ backgroundColor: 'var(--color-ink)', zIndex: 100 }}
           >
-            <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            <button
               onClick={() => setMenuOpen(false)}
-            />
-            <motion.nav
-              className="absolute right-0 top-0 bottom-0 w-64 bg-[#12121a] border-l border-white/10 p-6 pt-16 flex flex-col gap-2"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="absolute top-5 right-5 bg-transparent border-none cursor-pointer p-0"
+              aria-label="Close navigation menu"
+              style={{ color: 'var(--color-neon)' }}
             >
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="absolute top-4 right-4 text-slate-400 hover:text-slate-100"
-                aria-label="Close menu"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              {links.map(({ href, label }) => (
-                <a
-                  key={href}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="py-3 px-4 text-slate-300 hover:text-emerald-400 hover:bg-emerald-500/10 rounded-xl font-medium transition-colors"
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <nav className="flex flex-col items-center gap-4" aria-label="Mobile navigation">
+              {NAV_ITEMS.map(({ label, id }, index) => (
+                <motion.div
+                  key={id}
+                  initial={prefersReduced ? false : { clipPath: 'inset(100% 0% 0% 0%)' }}
+                  animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+                  transition={
+                    prefersReduced
+                      ? { duration: 0 }
+                      : { duration: 0.45, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }
+                  }
                 >
-                  {label}
-                </a>
+                  <button
+                    onClick={() => handleLinkClick(id)}
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontWeight: 900,
+                      fontSize: 'clamp(3rem, 8vw, 5.5rem)',
+                      lineHeight: 1,
+                      color: activeId === id ? 'var(--color-neon)' : 'var(--color-white)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      padding: '0.15em 0',
+                      transition: 'color 0.2s ease',
+                    }}
+                  >
+                    {label}
+                  </button>
+                </motion.div>
               ))}
-            </motion.nav>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
