@@ -63,7 +63,6 @@ export function Navigation() {
           left: 0,
           right: 0,
           zIndex: 50,
-          display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '0 2.5rem',
