@@ -45,7 +45,7 @@ export function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-32 px-6 overflow-hidden text-center"
+      className="relative py-16 lg:py-32 px-4 sm:px-6 overflow-hidden text-center"
       style={{
         background:
           'radial-gradient(ellipse at center, rgba(0,232,122,0.08) 0%, #080808 60%)',

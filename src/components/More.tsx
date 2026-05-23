@@ -56,8 +56,8 @@ function CertRow({ group, index }: { group: typeof certGroups[0]; index: number 
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          gap: '1.5rem',
-          padding: '1.75rem 0',
+          gap: 'clamp(0.5rem, 2vw, 1.5rem)',
+          padding: '1.25rem 0',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
@@ -92,8 +92,9 @@ function CertRow({ group, index }: { group: typeof certGroups[0]; index: number 
           {group.category}
         </span>
 
-        {/* Count badge */}
+        {/* Count badge — hidden on small screens */}
         <span
+          className="hidden sm:inline"
           style={{
             fontFamily: 'var(--font-mono)',
             fontSize: '0.7rem',
@@ -138,7 +139,7 @@ function CertRow({ group, index }: { group: typeof certGroups[0]; index: number 
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
                 gap: '0.5rem',
                 paddingBottom: '2rem',
               }}
@@ -217,7 +218,7 @@ export function More() {
     <section
       id="more"
       style={{ backgroundColor: 'var(--color-ink)' }}
-      className="py-24 px-6 lg:px-16"
+      className="py-16 lg:py-24 px-4 sm:px-6 lg:px-16"
     >
       <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         {/* Section label */}

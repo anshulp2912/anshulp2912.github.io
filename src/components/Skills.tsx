@@ -67,7 +67,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-24 px-6 overflow-hidden"
+      className="relative py-16 lg:py-24 px-4 sm:px-6 overflow-hidden"
       style={{ background: '#080808' }}
     >
       {/* Ghost counter */}

@@ -79,7 +79,7 @@ function ProjectCard({ title, description, link, isCream, variant, delay = 0, is
 
   const cardInner = (
     <div
-      className="group relative flex flex-col justify-between p-8 rounded-none transition-all duration-200 hover:scale-[1.02] cursor-pointer w-full h-full"
+      className="group relative flex flex-col justify-between p-4 sm:p-8 rounded-none transition-all duration-200 hover:scale-[1.02] cursor-pointer w-full h-full"
       style={{
         backgroundColor: bg,
         minHeight,
@@ -98,7 +98,7 @@ function ProjectCard({ title, description, link, isCream, variant, delay = 0, is
           style={{
             fontFamily: 'var(--font-display)',
             fontWeight: 700,
-            fontSize: variant === 'featured' ? '2rem' : '1.1rem',
+            fontSize: variant === 'featured' ? 'clamp(1.4rem, 4vw, 2rem)' : '1.1rem',
             lineHeight: 1.2,
             color: titleColor,
             margin: 0,
@@ -174,7 +174,7 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="relative py-24 px-6 overflow-hidden"
+      className="relative py-16 lg:py-24 px-4 sm:px-6 overflow-hidden"
       style={{ backgroundColor: '#080808' }}
     >
       {/* Giant ghost counter */}

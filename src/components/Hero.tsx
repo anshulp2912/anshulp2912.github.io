@@ -231,7 +231,7 @@ export function Hero() {
     >
       {/* ── Left panel: cream ─────────────────────────────── */}
       <motion.div
-        className="noise-overlay flex-none lg:w-[45%] w-full flex flex-col justify-center px-10 py-16 lg:py-0 lg:min-h-screen"
+        className="noise-overlay flex-none lg:w-[45%] w-full flex flex-col justify-center px-5 sm:px-10 py-16 lg:py-0 lg:min-h-screen"
         style={{ backgroundColor: '#f0ece3' }}
         {...panelAnim}
       >

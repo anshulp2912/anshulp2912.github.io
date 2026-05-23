@@ -14,7 +14,7 @@ export function Education() {
   return (
     <section
       id="education"
-      className="noise-overlay relative py-24 px-6 overflow-hidden"
+      className="noise-overlay relative py-16 lg:py-24 px-4 sm:px-6 overflow-hidden"
       style={{ backgroundColor: '#f0ece3' }}
     >
       {/* Giant ghost counter — desktop only */}
@@ -57,7 +57,7 @@ export function Education() {
               style={{
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
-                fontSize: '2rem',
+                fontSize: 'clamp(1.4rem, 4.5vw, 2rem)',
                 lineHeight: 1.1,
                 color: '#080808',
                 letterSpacing: '-0.01em',
@@ -96,7 +96,7 @@ export function Education() {
               style={{
                 fontFamily: 'var(--font-display)',
                 fontWeight: 700,
-                fontSize: '2rem',
+                fontSize: 'clamp(1.4rem, 4.5vw, 2rem)',
                 lineHeight: 1.1,
                 color: '#080808',
                 letterSpacing: '-0.01em',

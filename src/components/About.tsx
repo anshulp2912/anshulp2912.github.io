@@ -22,7 +22,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative py-28 px-6 overflow-hidden"
+      className="relative py-16 lg:py-28 px-4 sm:px-6 overflow-hidden"
       style={{ backgroundColor: '#080808' }}
     >
       {/* Giant section counter — desktop only */}
