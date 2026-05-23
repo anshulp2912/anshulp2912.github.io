@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 
 export function Contact() {
   const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true, margin: '0px' })
   const prefersReduced = useReducedMotion()
   const [copied, setCopied] = useState(false)
 

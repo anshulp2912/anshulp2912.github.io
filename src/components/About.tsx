@@ -13,7 +13,7 @@ const paragraphs = [
 
 export function About() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true, margin: '0px' })
   const prefersReducedMotion = useReducedMotion()
 
   const clipPathInitial = prefersReducedMotion ? 'inset(0% 0% 0% 0%)' : 'inset(0% 100% 0% 0%)'

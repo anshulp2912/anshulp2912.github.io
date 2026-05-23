@@ -12,7 +12,7 @@ interface ClipRevealProps {
 
 export default function ClipReveal({ children, className, delay = 0, stagger = false }: ClipRevealProps) {
   const ref = React.useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { margin: '-80px', once: true })
+  const inView = useInView(ref, { margin: '0px', once: true })
   const prefersReduced = useReducedMotion()
 
   if (prefersReduced) {

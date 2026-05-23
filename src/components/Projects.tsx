@@ -75,7 +75,7 @@ function ProjectCard({ title, description, link, isCream, variant, delay = 0, is
   const descColor = isCream ? '#8892a4' : '#8892a4'
   const linkBg = isCream ? '#080808' : '#f0ece3'
   const linkText = isCream ? '#f0ece3' : '#080808'
-  const minHeight = variant === 'featured' ? (isMobile ? '280px' : '100%') : isMobile ? '180px' : 'auto'
+  const minHeight = variant === 'featured' ? (isMobile ? 'auto' : '100%') : 'auto'
 
   const cardInner = (
     <div
